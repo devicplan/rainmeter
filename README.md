@@ -3,8 +3,8 @@
 For quite some time I had planned to measure the domestic amount of precipitation. There are simple rain gauges with a collecting vessel. However, the rainfall must be read, emptied and documented regularly. There are not many electronic rain gauges with radio technology and often a gateway with software is necessary here in addition to the rain gauge itself. The mechanical self-construction is tedious and very costly. Therefore, I decided to acquire the rain gauge and convert it for my purposes.
 
 ## Target:
-"-" Battery operation with at least 1 year battery life
-"-" Possibility of a universal connection for almost all home visualizations (ioBroker, FHEM, Mosquito ...)
+* Battery operation with at least 1 year battery life
+* Possibility of a universal connection for almost all home visualizations (ioBroker, FHEM, Mosquito ...)
 
 ## Implementation / result:
 - Battery operation with an expected battery life of 2 years.
