@@ -13,7 +13,8 @@ For quite some time I had planned to measure the domestic amount of precipitatio
 - the above mentioned home automations can process the data from Thingspeak or also directly from the TTS network via MQTT
 - also a Raspberry or an ESP can fetch data from the cloud of Thingspeak for further processing with a few lines of code 
 
-here you can read more  https://icplan.de/seite40/
+# here you can read more  
+https://icplan.de/seite40/
 
 # Regenmesser mit LoRaWAN Netzwerk
 
@@ -30,4 +31,5 @@ Schon längere Zeit hatte ich vor, die heimische Niederschlagsmenge zu messen. E
 – die oben genannten Homeautomatisierungen können dabei die Daten von Thingspeak oder auch direkt aus dem TTS Netzwerk per MQTT verarbeiten
 – auch ein Raspberry oder ein ESP kann sich mit wenigen Programmzeilen-Code Daten aus der Cloud von Thingspeak für eine Weiterverarbeitung holen 
 
-hier kannst Du weiterlesen https://icplan.de/seite40/
+# hier kannst Du weiterlesen 
+https://icplan.de/seite40/
