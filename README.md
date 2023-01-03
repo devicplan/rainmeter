@@ -1,3 +1,5 @@
+#Rainmeter with LoRaWAN network
+
 For quite some time I had planned to measure the domestic amount of precipitation. There are simple rain gauges with a collecting vessel. However, the rainfall must be read, emptied and documented regularly. There are not many electronic rain gauges with radio technology and often a gateway with software is necessary here in addition to the rain gauge itself. The mechanical self-construction is tedious and very costly. Therefore, I decided to acquire the rain gauge and convert it for my purposes.
 
 Target:
@@ -13,6 +15,7 @@ Implementation / result:
 
 here you can read more  https://icplan.de/seite40/
 
+#Regenmesser mit LoRaWAN Netzwerk
 
 Schon längere Zeit hatte ich vor, die heimische Niederschlagsmenge zu messen. Es gibt einfache Regenmesser mit einem Sammelgefäß. Die Regenmengen müssen aber regelmäßig abgelesen, geleert und dokumentiert werden. Elektronische Regenmesser mit Funktechnologie gibt es nicht viele und oft ist hier neben dem Regenmesser selbst auch noch ein Gateway mit Software notwendig. Der mechanische Selbstbau ist mühsam und sehr aufwändig. Daher entschied ich mich den Regenmesser zu erwerben und diesen für meine Zwecke umzubauen.
 
