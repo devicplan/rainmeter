@@ -7,7 +7,8 @@ For quite some time I had planned to measure the domestic amount of precipitatio
 * Possibility of a universal connection for almost all home visualizations (ioBroker, FHEM, Mosquito ...)
 
 ## Implementation / result:
-* Battery operation with an expected battery life of 2 years.
+* Battery operation with an expected battery life of 5 or more years.
+* Current 4,5 µA / 3 Volt
 * data transmission via an energy saving LoRaWAN wireless connection to the TTS network
 * from the TTS network the data is sent to Thingspeak via MQTT for logging and visualization
 * the above mentioned home automations can process the data from Thingspeak or also directly from the TTS network via MQTT
@@ -25,7 +26,8 @@ Schon längere Zeit hatte ich vor, die heimische Niederschlagsmenge zu messen. E
 * Möglichkeit einer universellen Anbindung für nahezu alle Home-Visualisierungen (ioBroker, FHEM, Mosquito …)
 
 ## Umsetzung / Ergebnis:
-* Batteriebetrieb mit einer erwarteten Batterielaufzeit von 2 Jahren
+* Batteriebetrieb mit einer erwarteten Batterielaufzeit von 5 oder mehr Jahren
+* Strombedarf 4,5 µA bei 3 Volt
 * Datenversand über eine energiesparende LoRaWAN Funkverbindung zum TTS Netzwerk
 * aus dem TTS  Netzwerk werden die Daten per MQTT für den Log und eine Visualisierung zu Thingspeak gesendet
 * die oben genannten Homeautomatisierungen können dabei die Daten von Thingspeak oder auch direkt aus dem TTS Netzwerk per MQTT verarbeiten
