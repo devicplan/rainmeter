@@ -1,9 +1,13 @@
 /*******************************************************************************
- * Jens Dietrich - Hoyerswerda - 05.11.2022 Rainmeter 
+ * Jens Dietrich - Hoyerswerda - 02.05.2023 Rainmeter new current 4,55 µA
  * Durchmesser 11,3cm entspricht 0,01m“ / Diameter 11,3cm corresponds to 0,01m
  * 100ml erzeugen 48 Impulse = 1cm Wasserhöhe entspricht 48 Impulse (0,21mm / 0.21 Liter je Impuls) /
  * 100ml generate 48 pulses = 1cm water height corresponds to 48 pulses (0.21mm / 0.21 Liter per pulse)
  * Clockerror = https://www.thethingsnetwork.org/forum/t/using-lmic-setclockerror-on-mcci-lmic-howto/39776
+ * 02.05.2023 Stromsparfunktionen
+ *  - ADC wird vor Sleep aus und danach wieder eingeschaltet
+ *  - BOD per ISP ausgeschaltet
+ *  - Batteriespannungsmessung mit hexausgabe Byte 4 und 5 (adc wert auf 1049 angepasst)
  * 
  * Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman 
  * Copyright (c) 2018 Terry Moore, MCCI
@@ -47,7 +51,7 @@
 
 #define debug                                                   // comment out for debug output
 
-unsigned long raintotal = 0;                                    // sum rain
+uint16_t raintotal = 0;                                         // sum rain
 uint16_t rain = 0;                                              // current value rain
 uint8_t rain_interrupt = 0;
 
@@ -91,6 +95,20 @@ const lmic_pinmap lmic_pins = {
     .rst = 9,
     .dio = {2, 5, LMIC_UNUSED_PIN},
 };
+
+float messen() {
+  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);                                 // preparation to measure internal 1.1 volts
+  delay(10);
+  ADCSRA |= _BV(ADSC);
+  while (bit_is_set(ADCSRA,ADSC));
+  uint8_t low  = ADCL;  
+  uint8_t high = ADCH;
+  long result = (high<<8) | low;
+  float vcc = (1049 * 1023L / result) + 0;                                                // 0 or 534 is blocking voltage diode batt->IC
+  analogReference(DEFAULT);                                                               // reset to Vcc as reference
+  delay(10);
+  return vcc;
+}
 
 #ifdef debug
 void printHex2(unsigned v) {
@@ -190,6 +208,8 @@ void onEvent (ev_t ev) {
               Serial.println();
             }
                          
+            uint8_t adcbackup = ADCSRA;                                                   // push adc parameter
+            ADCSRA = 0;                                                                   // adc switch off before standby
             delay(500);
             for(uint16_t t=0;t<(TX_INTERVAL/8);t++)  {                                    // interval see above
               if(rain_interrupt)  {
@@ -205,6 +225,7 @@ void onEvent (ev_t ev) {
               }
               startSleeping();
             }
+            ADCSRA = adcbackup;                                                           // pop adc parameter
             delay(500);
             os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(1), do_send);
             break;
@@ -253,15 +274,17 @@ void onEvent (ev_t ev) {
 }
 
 void do_send(osjob_t* j){
+    uint16_t sp;                                                // batterie voltage
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("F17"));
     } else {
+        sp = messen();
         mydata[0] = (rain & 0xFF00)>>8;                         // rain
         mydata[1] = (rain & 0x00FF);
-        mydata[2] = (raintotal & 0xFF000000)>>24;               // rain sum
-        mydata[3] = (raintotal & 0x00FF0000)>>16;
-        mydata[4] = (raintotal & 0x0000FF00)>>8;
-        mydata[5] = (raintotal & 0x000000FF);
+        mydata[2] = (raintotal & 0xFF00)>>8;                    // rain sum (=max 13762 liter)
+        mydata[3] = (raintotal & 0x00FF);
+        mydata[4] = (sp & 0xFF00)>>8;                           // batterie voltage
+        mydata[5] = (sp & 0x00FF);
         rain = 0;                                               // after send back to zero
         LMIC_setTxData2(1, mydata, 6, 0);        
 
